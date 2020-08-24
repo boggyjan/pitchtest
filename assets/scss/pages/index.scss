@@ -1,0 +1,94 @@
+.pitchTestApp {
+  font-family: 'Petrona', serif;
+
+  h1 {
+    font-size: 30rem;
+    font-weight: 700;
+  }
+
+  button {
+    padding: 10px 20px;
+    appearance: none;
+    border-radius: 100px;
+    font-family: 'Petrona', serif;
+    font-size: 16rem;
+    font-weight: 500;
+    border: 0;
+    background: #c96;
+    color: #fff;
+    outline: none;
+
+    &:focus {
+      box-shadow: 0 0 0 3px #c966
+    }
+
+    &:disabled {
+      color: #fff6;
+    }
+  }
+
+  .gameStep,
+  .gameScore {
+    font-size: 20rem;
+    font-weight: 500;
+  }
+
+  .countdownBar {
+    position: relative;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+
+    &--inner {
+      height: 10px;
+      background: #ccc;
+      border-radius: 20px;
+    }
+
+    /*
+    &--text {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 12px;
+    }
+    */
+  }
+
+  .recordList {
+    position: fixed;
+    top: 50px;
+    bottom: 50px;
+    left: 20px;
+    right: 20px;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 5px 20px #3335;
+
+    ul {
+      height: calc(100vh - 200px);
+      margin: 0;
+      padding: 0;
+      overflow-y: auto;
+      background: #eee;
+      list-style: none;
+
+      li {
+        display: flex;
+        padding: 20px;
+        border-bottom: 1px solid #ccc;
+
+        .recordListScore {
+          flex: 1;
+          font-weight: 500;
+        }
+        .recordListDate {
+          color: #222;
+          text-align: right;
+        }
+      }
+    }
+  }
+}
