@@ -4,30 +4,33 @@
 
     <div v-if="!playing">
       <button @click="playGame()">
-        start
+        {{ $t('common.start_game') }}
       </button>
       <button @click="showRecords()">
-        show records
+        {{ $t('common.show_records') }}
       </button>
     </div>
 
     <div v-else>
       <div class="gameStep">
-        Step:
+        {{ $t('common.stage') }}
+        :
         {{ displayStep }}
       </div>
 
       <div class="gameScore">
-        Score:
+        {{ $t('common.score') }}
+        :
         {{ displayScore }}
       </div>
 
       <div>
-        Time left:
+        {{ $t('common.time_left') }}
+        :
         {{ countdownTimeLeft }}
         <div class="countdownBar">
           <div
-            :style="`width: ${ (timeLimitPerQuestion - countdownTimeLeft) / timeLimitPerQuestion * 100 }%`"
+            :style="`width: ${ countdownBarWidth }%`"
             class="countdownBar--inner"></div>
           <!-- <div class="countdownBar--text">
             {{ countdownTimeLeft }}
@@ -42,31 +45,34 @@
           @click="playTune(idx)"
           :disabled="showingAnswer || gameover"
           class="tuneBtn">
-          {{ showingAnswer ? ansTunes[idx] : `Tune ${i}` }}
+          {{ showingAnswer ? `${ansTunes[idx]}Hz`  : `Tune ${i}` }}
         </button>
       </div>
 
       <div>
-        Which one is higher
+        {{ $t('common.which_one_is_higher') }}
+
         <button
           v-for="(i, idx) in 2"
           @click="showAns(idx === currentAns)"
           :key="`ansBtn${idx}`"
           :disabled="showingAnswer || gameover"
           class="ansBtn">
-          Tune {{ i }}
+          {{ $t('common.tune') }}
+          {{ i }}
         </button>
       </div>
 
       <div v-if="gameover">
-        Certification Pic
-        <img src="/images/cert_bg.jpg" alt="Certification">
+        {{ $t('common.your_certification') }}
+
+        <Certification :score="displayScore" />
 
         <button @click="replayGame()">
-          replay
+          {{ $t('common.replay') }}
         </button>
         <button @click="showRecords()">
-          show records
+          {{ $t('common.show_records') }}
         </button>
       </div>
     </div>
@@ -74,14 +80,16 @@
     <div
       v-if="showingRecords"
       class="recordList">
-      records
+      {{ $t('common.records') }}
+
       <ul>
         <li
           v-for="record in displayScoreRecords">
           <div class="recordListScore">
-            {{ record.score }} 分
+            {{ record.score }}
+            {{ $t('common.point') }}
             -
-            花了 {{ record.duration / 1000 }} 秒
+            {{ $t('common.took_n_sec', { n: record.duration / 1000 }) }}
           </div>
           <div class="recordListDate">
             {{ new Date(record.date).toLocaleString() }}
@@ -89,7 +97,7 @@
         </li>
       </ul>
       <button @click="hideRecords()">
-        close
+        {{ $t('common.close') }}
       </button>
     </div>
 
@@ -104,6 +112,32 @@
 // 4. share or save certification pic
 
 export default {
+  head () {
+    let title = this.$t('common.head_title')
+    let desc = this.$t('common.head_desc')
+    let image = 'https://app.boggy.tw/pitchtest/images/share.jpg'
+    let url = 'https://app.boggy.tw/pitchtest'
+
+    return {
+      title: title,
+      meta: [
+        { hid: 'description', name: 'description', content: desc },
+        { hid: 'twitter:type', name: 'twitter:type', content: 'summary_large_image' },
+        { hid: 'twitter:title', name: 'twitter:title', content: title },
+        { hid: 'twitter:description', name: 'twitter:description', desc },
+        { hid: 'twitter:image', name: 'twitter:image', content: image },
+        { hid: 'og:type', name: 'og:type', content: 'website' },
+        { hid: 'og:title', name: 'og:title', content: title },
+        { hid: 'og:description', name: 'og:description', content: desc },
+        { hid: 'og:image', name: 'og:image', content: image },
+        { hid: 'og:url', name: 'og:url', content: url },
+        { hid: 'og:site_name', name: 'og:site_name', content: 'PitchTest' }
+      ],
+      htmlAttrs: {
+        lang: this.$i18n.locales.filter(item => item.code === this.$i18n.locale)[0].iso
+      }
+    }
+  },
   data () {
     var ques = [14, 12, 13, 15, 10, 8, 9, 6, 7, 5, 3, 4, 2, 3, 1, 4, 3, 1, 2, 1]
     var baseTunes = [293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25]
@@ -161,6 +195,9 @@ export default {
     },
     displayScoreRecords () {
       return this.scoreRecords
+    },
+    countdownBarWidth () {
+      return (this.timeLimitPerQuestion - this.countdownTimeLeft) / this.timeLimitPerQuestion * 100
     }
   },
   methods: {
@@ -286,6 +323,12 @@ export default {
   },
   mounted () {
     this.scoreRecords = this.$cookies.get(this.scoreCookieKey) || []
+
+    // test end screen
+    setTimeout(() => {
+      this.totalScore = 288
+      this.endGame()
+    }, 1000)
   }
 }
 </script>

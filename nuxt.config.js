@@ -55,13 +55,45 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    'cookie-universal-nuxt'
+    'cookie-universal-nuxt',
+    'nuxt-i18n'
   ],
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
   axios: {},
+  /*
+  ** i18n module configuration
+  ** See https://i18n.nuxtjs.org/
+  */
+  i18n: {
+    locales: [
+      { code: 'tw', name: '繁體中文', shortName: '繁', iso: 'zh-Hant', file: 'tw.js' },
+      { code: 'en', name: 'English', shortName: 'EN', iso: 'en', file: 'en.js' },
+      { code: 'jp', name: '日本語', shortName: '日', iso: 'ja', file: 'jp.js' }
+    ],
+    lazy: true,
+    langDir: './i18n/',
+    defaultLocale: 'tw',
+    vueI18n: {
+      fallbackLocale: 'tw'
+      // dateTimeFormats,
+      // numberFormats
+    },
+    // vuex: {
+    //   moduleName: 'i18n',
+    //   syncLocale: true
+    // },
+    // detectBrowserLanguage: false
+    // strategy: 'no_prefix',
+    // detectBrowserLanguage: {
+    //   useCookie: false,
+    //   alwaysRedirect: true
+    // },
+    seo: true,
+    baseUrl: 'https://app.boggy.tw/pitchtest'
+  },
   /*
   ** Build configuration
   ** See https://nuxtjs.org/api/configuration-build/
