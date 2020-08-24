@@ -79,7 +79,9 @@
         <li
           v-for="record in displayScoreRecords">
           <div class="recordListScore">
-            {{ record.score }}
+            {{ record.score }} 分
+            -
+            花了 {{ record.duration / 1000 }} 秒
           </div>
           <div class="recordListDate">
             {{ new Date(record.date).toLocaleString() }}
@@ -130,6 +132,10 @@ export default {
       questionStep: 0,
       totalScore: 0,
       //
+      // time
+      startTime: null,
+      gameDuration: null,
+      //
       // records
       scoreRecords: [],
       //
@@ -171,9 +177,28 @@ export default {
         this.gainNode.connect(this.analyser)
       }
 
+      // save start time
+      this.startTime = new Date().getTime()
+
       this.playing = true
 
       this.showStep(this.questionStep)
+    },
+    //
+    // game over
+    endGame () {
+      var endTime = new Date().getTime()
+      this.gameDuration = endTime - this.startTime
+
+      this.gameover = true
+
+      // write score to cookie
+      this.scoreRecords.push({
+        date: new Date().getTime(),
+        score: this.displayScore,
+        duration: this.gameDuration
+      })
+      this.$cookies.set(this.scoreCookieKey, this.scoreRecords)
     },
     //
     // restart game
@@ -239,15 +264,7 @@ export default {
       }
 
       if (this.questionStep > 18) {
-        this.gameover = true
-
-        // write score to cookie
-        this.scoreRecords.push({
-          date: new Date().getTime(),
-          score: this.displayScore
-        })
-        this.$cookies.set(this.scoreCookieKey, this.scoreRecords)
-
+        this.endGame()
         return
       } else {
         setTimeout(() => {
