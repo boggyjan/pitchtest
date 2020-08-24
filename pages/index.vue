@@ -325,10 +325,10 @@ export default {
     this.scoreRecords = this.$cookies.get(this.scoreCookieKey) || []
 
     // test end screen
-    setTimeout(() => {
-      this.totalScore = 288
-      this.endGame()
-    }, 1000)
+    // setTimeout(() => {
+    //   this.totalScore = 288
+    //   this.endGame()
+    // }, 1000)
   }
 }
 </script>
