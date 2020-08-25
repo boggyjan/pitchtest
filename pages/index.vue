@@ -205,7 +205,7 @@ export default {
     // start game and init audio api
     playGame () {
       if (!this.context) {
-        this.context = new AudioContext
+        this.context = new (window.AudioContext || window.webkitAudioContext)
         this.analyser = this.context.createAnalyser()
         this.gainNode = this.context.createGain()
 
@@ -248,7 +248,7 @@ export default {
     },
     //
     // play tune sound
-    playTune (idx, type = 'sine', startTime = this.context.currentTime, duration = 1) {
+    playTune (idx, type = 'sine', startTime = this.context.currentTime, duration = 0.5) {
       var oscillator = this.context.createOscillator()
       oscillator.type = type
       oscillator.frequency.value = this.ansTunes[idx]
