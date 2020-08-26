@@ -87,10 +87,10 @@
       {{ $t('common.records') }}
       <div>
         <button @click="showRecords(0)">
-          local
+          {{ $t('common.local_records') }}
         </button>
         <button @click="showRecords(1)">
-          global
+          {{ $t('common.global_records') }}
         </button>
       </div>
       <ul>
@@ -104,7 +104,7 @@
             {{ $t('common.took_n_sec', { n: record.duration / 1000 }) }}
           </div>
           <div class="recordListDate">
-            {{ new Date(record.date).toLocaleString() }}
+            {{ new Date(record.date).toLocaleString('ja-JP', { hour12: false }) }}
           </div>
         </li>
       </ul>

@@ -16,6 +16,8 @@ export default {
     which_one_is_higher: 'どちらが高い',
     your_certification: '認定書',
     enter_your_name: '名前を入力',
-    submit: '完了'
+    submit: '完了',
+    local_records: 'あなた',
+    global_records: 'グローバルランキング'
   }
 }
