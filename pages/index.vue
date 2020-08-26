@@ -97,6 +97,7 @@
         <li
           v-for="record in displayScoreRecords">
           <div class="recordListScore">
+            {{ showingRecordType === 1 ? record.name + ' - ' : '' }}
             {{ record.score }}
             {{ $t('common.point') }}
             -
