@@ -69,7 +69,9 @@ export default {
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
-  axios: {},
+  axios: {
+    baseURL: '/'
+  },
   /*
   ** i18n module configuration
   ** See https://i18n.nuxtjs.org/
