@@ -11,7 +11,7 @@ export default {
     tune: 'Tune',
     replay: 'Replay',
     point: 'Point',
-    took_n_sec: 'took %{n} sec.',
+    took_n_sec: 'in %{n} sec.',
     close: 'Close',
     which_one_is_higher: 'Which one is higher',
     your_certification: 'Your certification',

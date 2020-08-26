@@ -11,7 +11,7 @@ export default {
     tune: '調律',
     replay: 'もう一度',
     point: '点',
-    took_n_sec: '%{n}秒かかった',
+    took_n_sec: '%{n}秒',
     close: '完了',
     which_one_is_higher: 'どちらが高い',
     your_certification: '認定書',
