@@ -59,6 +59,13 @@ export default {
     'nuxt-i18n'
   ],
   /*
+  ** serverMiddleware
+  */
+  serverMiddleware: [
+    { path: '/api/token', handler: '~/middleware/token.js' },
+    { path: '/api/score', handler: '~/middleware/score.js' }
+  ],
+  /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
@@ -99,5 +106,10 @@ export default {
   ** See https://nuxtjs.org/api/configuration-build/
   */
   build: {
+    extend (config, { isDev }) {
+      config.node = {
+        fs: 'empty'
+      }
+    }
   }
 }

@@ -2,11 +2,13 @@
   <div class="pitchTestApp">
     <Header />
 
+    <!-- {{ displayScoreRecords }} -->
+
     <div v-if="!playing">
       <button @click="playGame()">
         {{ $t('common.start_game') }}
       </button>
-      <button @click="showRecords()">
+      <button @click="showRecords(0)">
         {{ $t('common.show_records') }}
       </button>
     </div>
@@ -66,12 +68,14 @@
       <div v-if="gameover">
         {{ $t('common.your_certification') }}
 
-        <Certification :score="displayScore" />
+        <Certification
+          @userNameChanged="sendScoreToServer()"
+          :score="displayScore" />
 
         <button @click="replayGame()">
           {{ $t('common.replay') }}
         </button>
-        <button @click="showRecords()">
+        <button @click="showRecords(0)">
           {{ $t('common.show_records') }}
         </button>
       </div>
@@ -81,7 +85,14 @@
       v-if="showingRecords"
       class="recordList">
       {{ $t('common.records') }}
-
+      <div>
+        <button @click="showRecords(0)">
+          local
+        </button>
+        <button @click="showRecords(1)">
+          global
+        </button>
+      </div>
       <ul>
         <li
           v-for="record in displayScoreRecords">
@@ -155,7 +166,7 @@ export default {
       //
       // variables
       scoreCookieKey: 'pitchtest_game_v1_score',
-      timeLimitPerQuestion: 5,
+      timeLimitPerQuestion: 10,
       timeLimitInterval: null,
       countdownTimeLeft: null,
       countdownInterval: null,
@@ -172,17 +183,26 @@ export default {
       //
       // records
       scoreRecords: [],
+      globalScoreRecords: [],
       //
       // game status
       showingAnswer: false,
       playing: false,
       gameover: false,
       showingRecords: false,
+      showingRecordType: 0,
       //
       // audio api
       context: null,
       analyser: null,
       gainNode: null
+    }
+  },
+  watch: {
+    showingRecordType (val) {
+      if (val === 1) {
+        this.getGlobalRecords()
+      }
     }
   },
   computed: {
@@ -194,7 +214,7 @@ export default {
       return Math.floor(this.totalScore / this.maxScore * 10000) / 100
     },
     displayScoreRecords () {
-      return this.scoreRecords
+      return this.showingRecordType === 0 ? this.scoreRecords : this.globalScoreRecords
     },
     countdownBarWidth () {
       return (this.timeLimitPerQuestion - this.countdownTimeLeft) / this.timeLimitPerQuestion * 100
@@ -203,7 +223,15 @@ export default {
   methods: {
     //
     // start game and init audio api
-    playGame () {
+    async playGame () {
+      // get token from server
+      try {
+        let tokenReq = await this.$axios.get('api/token')
+        this.$axios.setToken(tokenReq.data.token)
+      } catch (err) {
+        console.log(err)
+      }
+
       if (!this.context) {
         this.context = new (window.AudioContext || window.webkitAudioContext)
         this.analyser = this.context.createAnalyser()
@@ -223,19 +251,45 @@ export default {
     },
     //
     // game over
-    endGame () {
+    async endGame () {
       var endTime = new Date().getTime()
       this.gameDuration = endTime - this.startTime
 
       this.gameover = true
 
-      // write score to cookie
-      this.scoreRecords.push({
+      let scoreData = {
         date: new Date().getTime(),
         score: this.displayScore,
         duration: this.gameDuration
+      }
+      // write score to cookie
+      this.scoreRecords.push(scoreData)
+      this.scoreRecords.sort((a, b) => {
+        if (a.score !== b.score) {
+          // high -> low
+          return b.score - a.score
+        } else {
+          // fast -> slow
+          return a.duration - b.duration
+        }
       })
       this.$cookies.set(this.scoreCookieKey, this.scoreRecords)
+
+      this.sendScoreToServer()      
+    },
+    async sendScoreToServer () {
+      // send score to server
+      try {
+        let scoreData = {
+          date: new Date().getTime(),
+          score: this.displayScore,
+          duration: this.gameDuration,
+          name: this.$cookies.get('userName') || 'unknow'
+        }
+        let scoreReq = await this.$axios.post('api/score', scoreData)
+      } catch (err) {
+        console.log(err)
+      }
     },
     //
     // restart game
@@ -312,8 +366,21 @@ export default {
     },
     //
     // show game records
-    showRecords () {
+    // 0 is local
+    // 1 is global
+    showRecords (type = 0) {
       this.showingRecords = true
+      this.showingRecordType = type
+    },
+    //
+    // get global records
+    async getGlobalRecords () {
+      try {
+        let scoreReq = await this.$axios.get('api/score')
+        this.globalScoreRecords = scoreReq.data.list
+      } catch (err) {
+        console.log(err)
+      }
     },
     //
     // show game records
@@ -321,14 +388,17 @@ export default {
       this.showingRecords = false
     }
   },
-  mounted () {
+  async mounted () {
     this.scoreRecords = this.$cookies.get(this.scoreCookieKey) || []
 
     // test end screen
     // setTimeout(() => {
+    //   this.playGame()
+    // }, 1000)
+    // setTimeout(() => {
     //   this.totalScore = 288
     //   this.endGame()
-    // }, 1000)
+    // }, 2000)
   }
 }
 </script>

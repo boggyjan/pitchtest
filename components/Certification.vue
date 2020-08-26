@@ -88,6 +88,7 @@ export default {
       this.editingUserName = false
       this.userName = this.tempUserName
       this.$cookies.set('userName', this.tempUserName)
+      this.$emit('userNameChanged')
     }
   },
   mounted () {
