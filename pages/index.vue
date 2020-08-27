@@ -3,41 +3,69 @@
     <Header />
 
     <div v-if="!playing">
-      <button @click="playGame()">
+      <h1>
+        {{ $t('common.head_title') }}
+      </h1>
+
+      <button
+        @click="playGame()"
+        class="menuBtn primary">
         {{ $t('common.start_game') }}
       </button>
-      <button @click="showRecords(0)">
+      <button
+        @click="showRecords(0)"
+        class="menuBtn">
         {{ $t('common.show_records') }}
       </button>
-      <button @click="showTutorial()">
+      <button
+        @click="showTutorial()"
+        class="menuBtn">
         {{ $t('common.show_tutorial') }}
       </button>
 
-      <div v-if="firstTimePlayTutorialVisible">
+      <div
+        class="tutorial modal"
+        v-if="firstTimePlayTutorialVisible">
         firstTimePlayTutorial content
-        <button @click="hideTutorialAndPlayGame()">
+        <button
+          @click="hideTutorialAndPlayGame()"
+          class="menuBtn primary">
           {{ $t('common.start_game') }}
         </button>
-        <button @click="hideTutorial()">
+        <button
+          @click="hideTutorial()"
+          class="menuBtn">
           {{ $t('common.close') }}
         </button>
       </div>
     </div>
 
     <div v-else>
+      <img
+        @click="backToMain()"
+        src="~/assets/images/back.svg"
+        class="backBtn"
+        alt="Back">
+
       <div class="gameStep">
-        {{ $t('common.stage') }}
-        :
-        {{ displayStep }}
+        <span class="title">
+          {{ $t('common.stage') }}
+        </span>
+        <span class="num">
+          {{ displayStep }}
+        </span>
       </div>
 
       <div class="gameScore">
-        {{ $t('common.score') }}
-        :
-        {{ displayScore }}
+        <div class="num">
+          {{ displayScore }}
+        </div>
+        <div class="title">
+          {{ $t('common.score') }}
+        </div>
       </div>
 
-      <div>
+      <div class="countdown">
         {{ $t('common.time_left') }}
         :
         {{ countdownTimeLeft }}
@@ -51,54 +79,68 @@
         </div>
       </div>
 
-      <div>
-        <div>
-          {{ $t('common.pitch_diff', { diff: pitchDiff }) }}
-        </div>
+      <div class="pitchDiff">
+        {{ $t('common.pitch_diff', { diff: pitchDiff }) }}
+      </div>
 
+      <div class="tuneBtns">
         <button
           v-for="(i, idx) in 2"
           :key="`tuneBtn${idx}`"
           @click="playTune(idx)"
           :disabled="showingAnswer || gameover"
           class="tuneBtn">
+          <img
+            src="~assets/images/tuning_fork.svg"
+            :alt="`Tune${i}`">
           {{ showingAnswer ? `${ansTunes[idx]}Hz`  : `Tune ${i}` }}
         </button>
       </div>
 
-      <div>
-        {{ $t('common.which_one_is_higher') }}
-
+      <div class="ansBtns">
         <button
           v-for="(i, idx) in 2"
           @click="showAns(idx === currentAns)"
           :key="`ansBtn${idx}`"
           :disabled="showingAnswer || gameover"
           class="ansBtn">
-          {{ $t('common.tune') }}
-          {{ i }}
+          {{ $t('common.n_tune_higher', { n: i }) }}
         </button>
       </div>
 
-      <div v-if="rightAnsAnimationVisible">
+      <div class="ansTitle">
+        {{ $t('common.which_one_is_higher') }}
+      </div>
+
+      <div
+        v-if="rightAnsAnimationVisible"
+        class="ansAnimation rightAnsAnimation">
         Right!
       </div>
 
-      <div v-if="wrongAnsAnimationVisible">
+      <div
+        v-if="wrongAnsAnimationVisible"
+        class="ansAnimation wrongAnsAnimation">
         Wrong!        
       </div>
 
-      <div v-if="gameover">
+      <div
+        v-if="gameover"
+        class="endScreen modal">
         {{ $t('common.your_certification') }}
 
         <Certification
           @userNameChanged="sendScoreToServer()"
           :score="displayScore" />
 
-        <button @click="replayGame()">
+        <button
+          @click="replayGame()"
+          class="menuBtn">
           {{ $t('common.replay') }}
         </button>
-        <button @click="showRecords(0)">
+        <button
+          @click="showRecords(0)"
+          class="menuBtn">
           {{ $t('common.show_records') }}
         </button>
       </div>
@@ -106,7 +148,7 @@
 
     <div
       v-if="showingRecords"
-      class="recordList">
+      class="recordList modal">
       {{ $t('common.records') }}
       <div>
         <button @click="showRecords(0)">
@@ -118,8 +160,9 @@
       </div>
       <ul>
         <li
-          v-for="record in displayScoreRecords">
+          v-for="(record, idx) in displayScoreRecords">
           <div class="recordListScore">
+            {{ idx + 1 }} | 
             {{ showingRecordType === 1 ? record.name + ' - ' : '' }}
             {{ record.score }}
             {{ $t('common.point') }}
@@ -131,7 +174,9 @@
           </div>
         </li>
       </ul>
-      <button @click="hideRecords()">
+      <button
+        @click="hideRecords()"
+        class="menuBtn primary">
         {{ $t('common.close') }}
       </button>
     </div>
@@ -305,6 +350,7 @@ export default {
       this.gameDuration = endTime - this.startTime
 
       this.gameover = true
+      this.showingAnswer = false
 
       let scoreData = {
         date: new Date().getTime(),
@@ -326,6 +372,8 @@ export default {
 
       this.sendScoreToServer()      
     },
+    //
+    // send score to server
     async sendScoreToServer () {
       // send score to server
       try {
@@ -348,6 +396,15 @@ export default {
       this.gameover = false
 
       this.playGame()
+    },
+    //
+    // back to main screen
+    backToMain () {
+      clearInterval(this.timeLimitInterval)
+      clearInterval(this.countdownInterval)
+      this.questionStep = 0
+      this.totalScore = 0
+      this.playing = false
     },
     //
     // play tune sound
@@ -407,7 +464,9 @@ export default {
       }
 
       if (this.questionStep > 18) {
-        this.endGame()
+        setTimeout(() => {
+          this.endGame()
+        }, this.ansDisplayDuration * 1000)
         return
       } else {
         setTimeout(() => {
@@ -455,6 +514,7 @@ export default {
   async mounted () {
     this.scoreRecords = this.$cookies.get(this.scoreCookieKey) || []
     this.firstTimePlay = typeof this.$cookies.get('firstTimePlay') === 'boolean' ? this.$cookies.get('firstTimePlay') : true
+
     // test end screen
     // setTimeout(() => {
     //   this.playGame()

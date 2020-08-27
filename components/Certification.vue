@@ -1,7 +1,10 @@
 <template>
   <div>
     <canvas width="795" height="615" ref="canvas" />
-    <button @click="editUserName()">
+    <button
+      v-if="!editingUserName"
+      @click="editUserName()"
+      class="menuBtn primary">
       {{ $t('common.enter_your_name') }}
     </button>
     <div
@@ -13,7 +16,7 @@
           :placeholder="$t('common.enter_your_name')"
           type="text"
           required>
-        <button>
+        <button class="menuBtn primary">
           {{ $t('common.submit') }}
         </button>
       </form>

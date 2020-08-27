@@ -1,74 +1,277 @@
+html {
+  font-size: 0.9999999px;
+}
+
+:root {
+  --primary: #eca523;
+}
+
+body {
+  margin: 50px;
+  background-color: #dcfefb;
+  background-image: linear-gradient(180deg, #5cd4ca, #dcfefb);
+  min-height: calc(100vh - 100px);
+  color: #435e5f;
+  font-size: 16rem;
+}
+
 .pitchTestApp {
-  font-family: 'Petrona', serif;
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: 'Varela Round', sans-serif;
 
   h1 {
-    font-size: 30rem;
+    margin: 0 0 50px 0;
+    color: #fff;
+    font-size: 40rem;
     font-weight: 700;
   }
 
-  button {
-    padding: 10px 20px;
+  .backBtn {
+    position: absolute;
+    left: -40px;
+    top: -40px;
+    width: 40px;
+    cursor: pointer;
+  }
+
+  input,
+  .menuBtn {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 20px 0;
+    padding: 20px;
     appearance: none;
-    border-radius: 100px;
-    font-family: sans-serif;
+    background: #fff;
+    border: 0;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    color: #435e5f;
+    font-family: 'Varela Round', sans-serif;
     font-size: 16rem;
     font-weight: 500;
-    border: 0;
-    background: #c96;
-    color: #fff;
     outline: none;
+    opacity: 0.9;
+
+    &:hover {
+      opacity: 1;
+    }
 
     &:focus {
-      box-shadow: 0 0 0 3px #c966
+      box-shadow: 0 0 0 4px #5ed4ca;
     }
 
     &:disabled {
       color: #fff6;
     }
+
+    &.primary {
+      background: var(--primary);
+      color: #fff;
+    }
   }
 
-  .gameStep,
+  input {
+    box-shadow: inset 0 0 0 4px #5ed4ca66;    
+
+    &:focus {
+      box-shadow: inset 0 0 0 4px #5ed4ca;
+    }
+  }
+
   .gameScore {
-    font-size: 20rem;
-    font-weight: 500;
+    position: absolute;
+    right: 0;
+    top: 0;
+    min-width: 80px;
+    color:#fff;
+    text-align: center;
+
+    .title {
+      padding: 2px;
+      border: 1px solid #fff;
+      border-radius: 3px;
+      font-size: 13rem;
+    }
+
+    .num {
+      font-size: 60rem;
+      font-weight: 500;
+    }
   }
 
-  .countdownBar {
-    position: relative;
-    border: 1px solid #ccc;
-    border-radius: 20px;
+  .gameStep {
+    padding: 10px 0;
+    color:#fff;
+    font-size: 40rem;
 
-    &--inner {
-      height: 10px;
-      background: #ccc;
+    .num {
+      margin-left: 10px;
+    }
+  }
+
+  .countdown {
+    margin: 20px 0;
+    color: #fff;
+
+    .countdownBar {
+      margin-top: 5px;
+      position: relative;
+      background: #5cd4ca;
       border-radius: 20px;
-    }
+      color:#fff;
 
-    /*
-    &--text {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      text-align: center;
-      font-size: 12px;
+      &--inner {
+        height: 6px;
+        // background: #59c40d;
+        background: #fffc;
+        border-radius: 20px;
+        transition: 0.2s;
+      }
+
+      /*
+      &--text {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-size: 12px;
+      }
+      */
     }
-    */
   }
 
-  .recordList {
+  .pitchDiff {
+    margin-top: 50px;
+    color: #fff;
+    text-align: center;
+  }
+
+  .tuneBtns {
+    display: flex;
+    margin: 10px -10px 0 -10px;
+
+    .tuneBtn {
+      flex: 1;
+      margin: 0 10px;
+      padding: 50px 20px;
+      appearance: none;
+      background: #fff;
+      border: 0;
+      border-radius: 10px 10px 0 0;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      color: #435e5f;
+      font-family: 'Varela Round', sans-serif;
+      font-size: 16rem;
+      font-weight: 500;
+      outline: none;
+      opacity: 0.9;
+
+      img {
+        display: block;
+        width: 60px;
+        margin: 10px auto;
+      }
+
+      &:hover {
+        opacity: 1;
+      }
+
+      &:focus {
+        box-shadow: 0 0 0 4px #5ed4ca
+      }
+
+      &:disabled {
+        color: #435e5f66;
+        opacity: 0.7;
+      }
+
+    }
+  }
+
+  .ansBtns {
+    display: flex;
+    margin: 0 -10px 10px -10px;
+
+    .ansBtn {
+      flex: 1;
+      margin: 0 10px;
+      padding: 20px;
+      appearance: none;
+      background: var(--primary);
+      border: 0;
+      border-radius: 0 0 10px 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      color: #fff;
+      font-family: 'Varela Round', sans-serif;
+      font-size: 16rem;
+      font-weight: 500;
+      outline: none;
+      opacity: 0.9;
+
+      &:hover {
+        opacity: 1;
+      }
+
+      &:focus {
+        box-shadow: 0 0 0 4px #5ed4ca
+      }
+
+      &:disabled {
+        color: #fff6;
+        opacity: 0.7;
+      }
+
+    }
+  }
+
+  .ansTitle {
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  .ansAnimation {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ff0;
+    font-size: 100px;
+
+    &.rightAnsAnimation {}
+    &.wrongAnsAnimation {}
+  }
+
+  .modal {
     position: fixed;
     top: 50px;
     bottom: 50px;
-    left: 20px;
-    right: 20px;
+    left: 20%;
+    right: 20%;
+    z-index: 1;
     padding: 20px;
     background: #fff;
     box-shadow: 0 5px 20px #3335;
+    border-radius: 10px;
+    overflow-y: auto;
 
+    @media (max-width: 800px) {
+      left: 20px;
+      right: 20px;
+    }
+  }
+
+  .recordList {
     ul {
-      height: calc(100vh - 200px);
+      height: calc(100vh - 330px);
       margin: 0;
       padding: 0;
       overflow-y: auto;
@@ -90,5 +293,24 @@
         }
       }
     }
+  }
+
+  .tutorial {}
+
+  .endScreen {
+    canvas {
+      display: block;
+      width: 400px;
+      max-width: 100%;
+      margin: 0 auto;
+    }
+  }
+
+  .footer {
+    margin-top: 80px;
+    padding: 20px 0;
+    font-size: 13rem;
+    text-align: center;
+    opacity: 0.5;
   }
 }

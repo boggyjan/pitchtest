@@ -10,6 +10,7 @@ export default {
     score: 'Score',
     time_left: 'Time Left',
     tune: 'Tune',
+    n_tune_higher: '%{n} is higher',
     pitch_diff: 'Pitch diff is %{diff}Hz',
     replay: 'Replay',
     point: 'Point',

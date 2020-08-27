@@ -10,6 +10,7 @@ export default {
     score: '点数',
     time_left: '残り時間',
     tune: '調律',
+    n_tune_higher: '%{n}の方が高い',
     pitch_diff: '調律差 %{diff}Hz',
     replay: 'もう一度',
     point: '点',

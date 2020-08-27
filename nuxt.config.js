@@ -14,6 +14,10 @@ export default {
     host: '0.0.0.0' // default: localhost
   },
   /*
+  ** Customize the progress-bar color
+  */
+  loading: { color: '#fff' },
+  /*
   ** Headers of the page
   ** See https://nuxtjs.org/api/configuration-head
   */
