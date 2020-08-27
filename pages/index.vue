@@ -53,7 +53,7 @@
 
       <div>
         <div>
-          {{ $t('common.pitch_diff', { diff: Math.abs(ansTunes[0] - ansTunes[1]) }) }}
+          {{ $t('common.pitch_diff', { diff: pitchDiff }) }}
         </div>
 
         <button
@@ -244,6 +244,9 @@ export default {
     },
     countdownBarWidth () {
       return (this.timeLimitPerQuestion - this.countdownTimeLeft) / this.timeLimitPerQuestion * 100
+    },
+    pitchDiff () {
+      return Math.abs(this.ansTunes[0] - this.ansTunes[1])
     }
   },
   methods: {

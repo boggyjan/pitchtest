@@ -37,6 +37,23 @@ export default {
       default: 0
     }
   },
+  computed: {
+    levelMsg () {
+      if (this.score <= 50) {
+        return this.$t('common.level_msg_6')
+      } else if (this.score > 50 && this.score <= 60) {
+        return this.$t('common.level_msg_5')
+      } else if (this.score > 60 && this.score <= 70) {
+        return this.$t('common.level_msg_4')
+      } else if (this.score > 70 && this.score <= 80) {
+        return this.$t('common.level_msg_3')
+      } else if (this.score > 80 && this.score <= 90) {
+        return this.$t('common.level_msg_2')
+      } else {
+        return this.$t('common.level_msg_1')
+      }
+    }
+  },
   watch: {
     userName: {
       immediate: true,
@@ -80,6 +97,7 @@ export default {
       context.textAlign = 'center'
       context.fillText(this.score, canvas.width / 2, 260)
       context.fillText(this.userName, canvas.width / 2, 315)
+      context.fillText(this.levelMsg, canvas.width / 2, 415)
     },
     editUserName () {
       this.editingUserName = true

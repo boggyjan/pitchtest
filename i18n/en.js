@@ -7,7 +7,7 @@ export default {
     show_tutorial: 'Tutorials',
     records: 'Records',
     stage: 'Stage',
-    score: 'Scroe',
+    score: 'Score',
     time_left: 'Time Left',
     tune: 'Tune',
     pitch_diff: 'Pitch diff is %{diff}Hz',
@@ -20,6 +20,12 @@ export default {
     enter_your_name: 'Enter Your Name',
     submit: 'Submit',
     local_records: 'Your Records',
-    global_records: 'Global Ranking '
+    global_records: 'Global Ranking',
+    level_msg_1: 'Actually you are AI, right?',
+    level_msg_2: 'A little bit weird physique.',
+    level_msg_3: 'Cool, you have sensitive ears.',
+    level_msg_4: 'Mmmn...Just a ordinary person.',
+    level_msg_5: 'Be brave, I\'ll stand by your side.',
+    level_msg_6: 'Please turn right for ENT dental.',
   }
 }

@@ -20,6 +20,12 @@ export default {
     enter_your_name: '名前を入力',
     submit: '完了',
     local_records: 'あなた',
-    global_records: 'グローバルランキング'
+    global_records: 'グローバルランキング',
+    level_msg_1: '本体はAIじゃない？',
+    level_msg_2: '少し変な体質',
+    level_msg_3: '素晴らしい耳',
+    level_msg_4: 'ただの普通の人',
+    level_msg_5: 'ジャイアンガキ大将',
+    level_msg_6: '耳鼻咽喉科は右に曲がってください',
   }
 }
