@@ -2,8 +2,6 @@
   <div class="pitchTestApp">
     <Header />
 
-    <!-- {{ displayScoreRecords }} -->
-
     <div v-if="!playing">
       <button @click="playGame()">
         {{ $t('common.start_game') }}
@@ -11,6 +9,19 @@
       <button @click="showRecords(0)">
         {{ $t('common.show_records') }}
       </button>
+      <button @click="showTutorial()">
+        {{ $t('common.show_tutorial') }}
+      </button>
+
+      <div v-if="firstTimePlayTutorialVisible">
+        firstTimePlayTutorial content
+        <button @click="hideTutorialAndPlayGame()">
+          {{ $t('common.start_game') }}
+        </button>
+        <button @click="hideTutorial()">
+          {{ $t('common.close') }}
+        </button>
+      </div>
     </div>
 
     <div v-else>
@@ -41,6 +52,10 @@
       </div>
 
       <div>
+        <div>
+          {{ $t('common.pitch_diff', { diff: Math.abs(ansTunes[0] - ansTunes[1]) }) }}
+        </div>
+
         <button
           v-for="(i, idx) in 2"
           :key="`tuneBtn${idx}`"
@@ -63,6 +78,14 @@
           {{ $t('common.tune') }}
           {{ i }}
         </button>
+      </div>
+
+      <div v-if="rightAnsAnimationVisible">
+        Right!
+      </div>
+
+      <div v-if="wrongAnsAnimationVisible">
+        Wrong!        
       </div>
 
       <div v-if="gameover">
@@ -177,6 +200,8 @@ export default {
       ansTunes: null,
       questionStep: 0,
       totalScore: 0,
+      firstTimePlay: true,
+      firstTimePlayTutorialVisible: false,
       //
       // time
       startTime: null,
@@ -225,6 +250,13 @@ export default {
     //
     // start game and init audio api
     async playGame () {
+
+      // first time play tutorial
+      if (this.firstTimePlay) {
+        this.showTutorial()
+        return
+      }
+
       // get token from server
       try {
         let tokenReq = await this.$axios.get('api/token')
@@ -249,6 +281,19 @@ export default {
       this.playing = true
 
       this.showStep(this.questionStep)
+    },
+    // tutorial
+    showTutorial () {
+      this.firstTimePlayTutorialVisible = true
+      this.firstTimePlay = false
+      this.$cookies.set('firstTimePlay', false)
+    },
+    hideTutorialAndPlayGame () {
+      this.hideTutorial()
+      this.playGame()
+    },
+    hideTutorial () {
+      this.firstTimePlayTutorialVisible = false
     },
     //
     // game over
@@ -342,7 +387,7 @@ export default {
       }, 1000)
     },
     //
-    // show answer (getScore代表有得分)
+    // 當按下選項或是時間到時觸發 (getScore代表有得分)
     showAns (getScore = false) {
       clearInterval(this.timeLimitInterval)
       clearInterval(this.countdownInterval)
@@ -353,6 +398,9 @@ export default {
       // add score
       if (getScore) {
         this.totalScore += 20 - this.ques[this.questionStep]
+        this.showRightAnsAnimation()
+      } else {
+        this.showWrongAnsAnimation()
       }
 
       if (this.questionStep > 18) {
@@ -364,6 +412,18 @@ export default {
           this.showStep(this.questionStep)
         }, this.ansDisplayDuration * 1000)
       }
+    },
+    showRightAnsAnimation () {
+      this.rightAnsAnimationVisible = true
+      setTimeout(() => {
+        this.rightAnsAnimationVisible = false
+      }, 1000)
+    },
+    showWrongAnsAnimation () {
+      this.wrongAnsAnimationVisible = true
+      setTimeout(() => {
+        this.wrongAnsAnimationVisible = false
+      }, 1000)
     },
     //
     // show game records
@@ -391,7 +451,7 @@ export default {
   },
   async mounted () {
     this.scoreRecords = this.$cookies.get(this.scoreCookieKey) || []
-
+    this.firstTimePlay = typeof this.$cookies.get('firstTimePlay') === 'boolean' ? this.$cookies.get('firstTimePlay') : true
     // test end screen
     // setTimeout(() => {
     //   this.playGame()
