@@ -2,184 +2,28 @@
   <div class="pitchTestApp">
     <Header />
 
-    <div v-if="!playing">
-      <h1>
-        {{ $t('common.head_title') }}
-      </h1>
+    <MainMenu
+      v-if="!playing"
+      @playGame="playGame()"
+      @showRecords="showRecords($event)"
+      @showTutorial="showTutorial()" />
 
-      <button
-        @click="playGame()"
-        class="menuBtn primary">
-        {{ $t('common.start_game') }}
-      </button>
-      <button
-        @click="showRecords(0)"
-        class="menuBtn">
-        {{ $t('common.show_records') }}
-      </button>
-      <button
-        @click="showTutorial()"
-        class="menuBtn">
-        {{ $t('common.show_tutorial') }}
-      </button>
+    <Tutorial
+      :firstTimePlayTutorialVisible="firstTimePlayTutorialVisible"
+      @hideTutorialAndPlayGame="hideTutorialAndPlayGame()"
+      @hideTutorial="hideTutorial()" />
 
-      <div
-        class="tutorial modal"
-        v-if="firstTimePlayTutorialVisible">
-        firstTimePlayTutorial content
-        <button
-          @click="hideTutorialAndPlayGame()"
-          class="menuBtn primary">
-          {{ $t('common.start_game') }}
-        </button>
-        <button
-          @click="hideTutorial()"
-          class="menuBtn">
-          {{ $t('common.close') }}
-        </button>
-      </div>
-    </div>
+    <GameStage
+      v-if="playing"
+      :scoreCookieKey="scoreCookieKey"
+      @playGame="playGame()"
+      @endGame="endGame()"
+      @showRecords="showRecords()" />
 
-    <div v-else>
-      <img
-        @click="backToMain()"
-        src="~/assets/images/back.svg"
-        class="backBtn"
-        alt="Back">
-
-      <div class="gameStep">
-        <span class="title">
-          {{ $t('common.stage') }}
-        </span>
-        <span class="num">
-          {{ displayStep }}
-        </span>
-      </div>
-
-      <div class="gameScore">
-        <div class="num">
-          {{ displayScore }}
-        </div>
-        <div class="title">
-          {{ $t('common.score') }}
-        </div>
-      </div>
-
-      <div class="countdown">
-        {{ $t('common.time_left') }}
-        :
-        {{ countdownTimeLeft }}
-        <div class="countdownBar">
-          <div
-            :style="`width: ${ countdownBarWidth }%`"
-            class="countdownBar--inner"></div>
-          <!-- <div class="countdownBar--text">
-            {{ countdownTimeLeft }}
-          </div> -->
-        </div>
-      </div>
-
-      <div class="pitchDiff">
-        {{ $t('common.pitch_diff', { diff: pitchDiff }) }}
-      </div>
-
-      <div class="tuneBtns">
-        <button
-          v-for="(i, idx) in 2"
-          :key="`tuneBtn${idx}`"
-          @click="playTune(idx)"
-          :disabled="showingAnswer || gameover"
-          class="tuneBtn">
-          <img
-            src="~assets/images/tuning_fork.svg"
-            :alt="`Tune${i}`">
-          {{ showingAnswer ? `${ansTunes[idx]}Hz`  : `Tune ${i}` }}
-        </button>
-      </div>
-
-      <div class="ansBtns">
-        <button
-          v-for="(i, idx) in 2"
-          @click="showAns(idx === currentAns)"
-          :key="`ansBtn${idx}`"
-          :disabled="showingAnswer || gameover"
-          class="ansBtn">
-          {{ $t('common.n_tune_higher', { n: i }) }}
-        </button>
-      </div>
-
-      <div class="ansTitle">
-        {{ $t('common.which_one_is_higher') }}
-      </div>
-
-      <div
-        v-if="rightAnsAnimationVisible"
-        class="ansAnimation rightAnsAnimation">
-        Right!
-      </div>
-
-      <div
-        v-if="wrongAnsAnimationVisible"
-        class="ansAnimation wrongAnsAnimation">
-        Wrong!        
-      </div>
-
-      <div
-        v-if="gameover"
-        class="endScreen modal">
-        {{ $t('common.your_certification') }}
-
-        <Certification
-          @userNameChanged="sendScoreToServer()"
-          :score="displayScore" />
-
-        <button
-          @click="replayGame()"
-          class="menuBtn">
-          {{ $t('common.replay') }}
-        </button>
-        <button
-          @click="showRecords(0)"
-          class="menuBtn">
-          {{ $t('common.show_records') }}
-        </button>
-      </div>
-    </div>
-
-    <div
+    <Records
       v-if="showingRecords"
-      class="recordList modal">
-      {{ $t('common.records') }}
-      <div>
-        <button @click="showRecords(0)">
-          {{ $t('common.local_records') }}
-        </button>
-        <button @click="showRecords(1)">
-          {{ $t('common.global_records') }}
-        </button>
-      </div>
-      <ul>
-        <li
-          v-for="(record, idx) in displayScoreRecords">
-          <div class="recordListScore">
-            {{ idx + 1 }} | 
-            {{ showingRecordType === 1 ? record.name + ' - ' : '' }}
-            {{ record.score }}
-            {{ $t('common.point') }}
-            -
-            {{ $t('common.took_n_sec', { n: record.duration / 1000 }) }}
-          </div>
-          <div class="recordListDate">
-            {{ new Date(record.date).toLocaleString('ja-JP', { hour12: false }) }}
-          </div>
-        </li>
-      </ul>
-      <button
-        @click="hideRecords()"
-        class="menuBtn primary">
-        {{ $t('common.close') }}
-      </button>
-    </div>
+      :scoreCookieKey="scoreCookieKey"
+      @hideRecords="hideRecords()" />
 
     <Footer />
   </div>
@@ -219,54 +63,15 @@ export default {
     }
   },
   data () {
-    var ques = [14, 12, 13, 15, 10, 8, 9, 6, 7, 5, 3, 4, 2, 3, 1, 4, 3, 1, 2, 1]
-    var baseTunes = [293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25]
-    // 最大差值
-    var questionWaveRange = 20
-    // 最大可能得分數（會超過100，顯示分數時會再做轉換）
-    var maxScore = questionWaveRange * ques.length - ques.reduce((a,b) => a + b)
-
     return {
-      // test questions
-      ques,
-      baseTunes,
-      questionWaveRange,
-      maxScore,
-      //
       // variables
       scoreCookieKey: 'pitchtest_game_v1_score',
-      timeLimitPerQuestion: 10,
-      timeLimitInterval: null,
-      countdownTimeLeft: null,
-      countdownInterval: null,
-      ansDisplayDuration: 1,
-      baseTune: null,
-      currentAns: null,
-      ansTunes: null,
-      questionStep: 0,
-      totalScore: 0,
       firstTimePlay: true,
       firstTimePlayTutorialVisible: false,
-      //
-      // time
-      startTime: null,
-      gameDuration: null,
-      //
-      // records
-      scoreRecords: [],
-      globalScoreRecords: [],
-      //
+
       // game status
-      showingAnswer: false,
       playing: false,
-      gameover: false,
-      showingRecords: false,
-      showingRecordType: 0,
-      //
-      // audio api
-      context: null,
-      analyser: null,
-      gainNode: null
+      showingRecords: false
     }
   },
   watch: {
@@ -276,60 +81,16 @@ export default {
       }
     }
   },
-  computed: {
-    displayStep () {
-      return this.questionStep + 1
-    },
-    displayScore () {
-      // maxScore 268
-      return Math.floor(this.totalScore / this.maxScore * 10000) / 100
-    },
-    displayScoreRecords () {
-      return this.showingRecordType === 0 ? this.scoreRecords : this.globalScoreRecords
-    },
-    countdownBarWidth () {
-      return (this.timeLimitPerQuestion - this.countdownTimeLeft) / this.timeLimitPerQuestion * 100
-    },
-    pitchDiff () {
-      return Math.abs(this.ansTunes[0] - this.ansTunes[1])
-    }
-  },
   methods: {
-    //
     // start game and init audio api
     async playGame () {
-
-      // first time play tutorial
       if (this.firstTimePlay) {
         this.showTutorial()
-        return
+      } else {
+        this.playing = true
       }
-
-      // get token from server
-      try {
-        let tokenReq = await this.$axios.get('api/token')
-        this.$axios.setToken(tokenReq.data.token)
-      } catch (err) {
-        console.log(err)
-      }
-
-      if (!this.context) {
-        this.context = new (window.AudioContext || window.webkitAudioContext)
-        this.analyser = this.context.createAnalyser()
-        this.gainNode = this.context.createGain()
-
-        this.analyser.connect(this.context.destination)
-        this.gainNode.gain.value = 0.25
-        this.gainNode.connect(this.analyser)
-      }
-
-      // save start time
-      this.startTime = new Date().getTime()
-
-      this.playing = true
-
-      this.showStep(this.questionStep)
     },
+
     // tutorial
     showTutorial () {
       this.firstTimePlayTutorialVisible = true
@@ -343,186 +104,21 @@ export default {
     hideTutorial () {
       this.firstTimePlayTutorialVisible = false
     },
-    //
-    // game over
-    async endGame () {
-      var endTime = new Date().getTime()
-      this.gameDuration = endTime - this.startTime
 
-      this.gameover = true
-      this.showingAnswer = false
-
-      let scoreData = {
-        date: new Date().getTime(),
-        score: this.displayScore,
-        duration: this.gameDuration
-      }
-      // write score to cookie
-      this.scoreRecords.push(scoreData)
-      this.scoreRecords.sort((a, b) => {
-        if (a.score !== b.score) {
-          // high -> low
-          return b.score - a.score
-        } else {
-          // fast -> slow
-          return a.duration - b.duration
-        }
-      })
-      this.$cookies.set(this.scoreCookieKey, this.scoreRecords)
-
-      this.sendScoreToServer()      
-    },
-    //
-    // send score to server
-    async sendScoreToServer () {
-      // send score to server
-      try {
-        let scoreData = {
-          date: new Date().getTime(),
-          score: this.displayScore,
-          duration: this.gameDuration,
-          name: this.$cookies.get('userName') || 'unknow'
-        }
-        let scoreReq = await this.$axios.post('api/score', scoreData)
-      } catch (err) {
-        console.log(err)
-      }
-    },
-    //
-    // restart game
-    replayGame () {
-      this.questionStep = 0
-      this.totalScore = 0
-      this.gameover = false
-
-      this.playGame()
-    },
-    //
     // back to main screen
-    backToMain () {
-      clearInterval(this.timeLimitInterval)
-      clearInterval(this.countdownInterval)
-      this.questionStep = 0
-      this.totalScore = 0
+    endGame () {
       this.playing = false
     },
-    //
-    // play tune sound
-    playTune (idx, type = 'sine', startTime = this.context.currentTime, duration = 0.5) {
-      var oscillator = this.context.createOscillator()
-      oscillator.type = type
-      oscillator.frequency.value = this.ansTunes[idx]
-      oscillator.detune.value = 0
-      oscillator.connect(this.gainNode)
-      oscillator.start(startTime)
-      oscillator.stop(startTime + duration)
-    },
-    //
-    // set question
-    showStep (step) {
-      clearInterval(this.timeLimitInterval)
-      clearInterval(this.countdownInterval)
 
-      this.showingAnswer = false
-
-      this.currentAns = Math.round(Math.random()) // 0 - 1
-      this.baseTune = this.baseTunes[Math.floor(Math.random() * this.baseTunes.length)]
-
-      var right = this.baseTune + this.ques[step]
-      var wrong = this.baseTune
-
-      if (this.currentAns === 0) {
-        this.ansTunes = [right, wrong]
-      } else {
-        this.ansTunes = [wrong, right]
-      }
-
-      this.timeLimitInterval = setTimeout(() => {
-        this.showAns(false)
-      }, this.timeLimitPerQuestion * 1000)
-
-      this.countdownTimeLeft = this.timeLimitPerQuestion
-      this.countdownInterval = setInterval(() => {
-        this.countdownTimeLeft--
-      }, 1000)
-    },
-    //
-    // 當按下選項或是時間到時觸發 (getScore代表有得分)
-    showAns (getScore = false) {
-      clearInterval(this.timeLimitInterval)
-      clearInterval(this.countdownInterval)
-      this.countdownTimeLeft = 0
-
-      this.showingAnswer = true
-
-      // add score
-      if (getScore) {
-        this.totalScore += 20 - this.ques[this.questionStep]
-        this.showRightAnsAnimation()
-      } else {
-        this.showWrongAnsAnimation()
-      }
-
-      if (this.questionStep > 18) {
-        setTimeout(() => {
-          this.endGame()
-        }, this.ansDisplayDuration * 1000)
-        return
-      } else {
-        setTimeout(() => {
-          this.questionStep++
-          this.showStep(this.questionStep)
-        }, this.ansDisplayDuration * 1000)
-      }
-    },
-    showRightAnsAnimation () {
-      this.rightAnsAnimationVisible = true
-      setTimeout(() => {
-        this.rightAnsAnimationVisible = false
-      }, 1000)
-    },
-    showWrongAnsAnimation () {
-      this.wrongAnsAnimationVisible = true
-      setTimeout(() => {
-        this.wrongAnsAnimationVisible = false
-      }, 1000)
-    },
-    //
-    // show game records
-    // 0 is local
-    // 1 is global
-    showRecords (type = 0) {
+    showRecords () {
       this.showingRecords = true
-      this.showingRecordType = type
     },
-    //
-    // get global records
-    async getGlobalRecords () {
-      try {
-        let scoreReq = await this.$axios.get('api/score')
-        this.globalScoreRecords = scoreReq.data.list
-      } catch (err) {
-        console.log(err)
-      }
-    },
-    //
-    // show game records
     hideRecords () {
       this.showingRecords = false
     }
   },
   async mounted () {
-    this.scoreRecords = this.$cookies.get(this.scoreCookieKey) || []
     this.firstTimePlay = typeof this.$cookies.get('firstTimePlay') === 'boolean' ? this.$cookies.get('firstTimePlay') : true
-
-    // test end screen
-    // setTimeout(() => {
-    //   this.playGame()
-    // }, 1000)
-    // setTimeout(() => {
-    //   this.totalScore = 288
-    //   this.endGame()
-    // }, 2000)
   }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <canvas width="795" height="615" ref="canvas" />
+    <canvas width="1000" height="700" ref="canvas" />
     <button
       v-if="!editingUserName"
       @click="editUserName()"
@@ -96,11 +96,13 @@ export default {
       let canvas = this.$refs.canvas
       let context = canvas.getContext('2d')
       context.drawImage(this.certBg, 0, 0)
-      context.font = '30px Petrona'
+      context.font = '60px Serif'
       context.textAlign = 'center'
-      context.fillText(this.score, canvas.width / 2, 260)
-      context.fillText(this.userName, canvas.width / 2, 315)
-      context.fillText(this.levelMsg, canvas.width / 2, 415)
+      context.fillText(this.userName, canvas.width / 2, 360)
+      context.font = '50px Serif'
+      context.fillText(this.score, 290, 490)
+      context.font = '25px San Serif'
+      context.fillText(this.levelMsg, 590, 480)
     },
     editUserName () {
       this.editingUserName = true

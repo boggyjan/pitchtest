@@ -4,5 +4,12 @@
   </div>
 </template>
 
-<style>
+<style lang="scss">
+.footer {
+  margin-top: 80px;
+  padding: 20px 0;
+  font-size: 13rem;
+  text-align: center;
+  color: #6cc5be;
+}
 </style>
