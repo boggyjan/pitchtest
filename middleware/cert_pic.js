@@ -7,9 +7,9 @@ export default async function (req, res, next) {
 
     const query = querystring.parse(req._parsedOriginalUrl.query)
 
-    const userName = query.username
-    const score = query.score
-    const levelMsg = query.levelmsg
+    const userName = decodeURI(query.username.replace(/\=/g, '%'))
+    const score = decodeURI(query.score.replace(/\=/g, '%'))
+    const levelMsg = decodeURI(query.levelmsg.replace(/\=/g, '%'))
 
     const width = 1000
     const height = 700

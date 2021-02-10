@@ -14,7 +14,7 @@
 
     <a
       v-if="!editingUserName"
-      :href="`https://www.facebook.com/sharer/sharer.php?u=https://pitchtest.boggy.tw/${userName}/${score}/${levelMsg}`"
+      :href="`https://www.facebook.com/sharer/sharer.php?u=https://pitchtest.boggy.tw/${encodeURI(userName).replace(/%/g ,'=')}/${encodeURI(score).replace(/%/g ,'=')}/${encodeURI(levelMsg).replace(/%/g ,'=')}`"
       target="_blank"
       class="menuBtn primary">
       {{ $t('common.share_to_fb') }}

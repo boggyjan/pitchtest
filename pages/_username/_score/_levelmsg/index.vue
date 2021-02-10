@@ -19,9 +19,9 @@
 <script>
 export default {
   head () {
-    const userName = this.$route.params.username
-    const score = this.$route.params.score
-    const levelMsg = this.$route.params.levelmsg
+    const userName = decodeURI(this.$route.params.username.replace(/\=/g, '%'))
+    const score = decodeURI(this.$route.params.score.replace(/\=/g, '%'))
+    const levelMsg = decodeURI(this.$route.params.levelmsg.replace(/\=/g, '%'))
 
     const title = `${userName} - ${score} ${this.$t('common.point')} - ${this.$t('common.head_title')}`
     const desc = this.$t('common.head_desc')
