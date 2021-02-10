@@ -30,5 +30,6 @@ export default {
     level_msg_4: 'You just a ordinary person.',
     level_msg_5: 'Be brave, I\'ll stand by your side.',
     level_msg_6: 'Please turn right for ENT dental.',
+    tutorial_content: 'Unmute your device, and play game!'
   }
 }

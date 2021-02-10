@@ -30,5 +30,6 @@ export default {
     level_msg_4: '比高加魚好一點',
     level_msg_5: '你是胖虎，你是孩子王',
     level_msg_6: '耳鼻喉科請右轉',
+    tutorial_content: '取消裝置靜音後，即可開始遊戲！'
   }
 }

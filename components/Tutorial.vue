@@ -7,9 +7,12 @@
     </div>
 
     <div class="modalBody">
-      <img
-        :src="`images/tutorial_${$i18n.locale}.jpg`"
-        class="tutorial-pic">
+      <div>
+        <img
+          :src="`images/tutorial_${$i18n.locale}.jpg`"
+          class="tutorial-pic">
+      </div>
+      {{ $t('common.tutorial_content') }}
     </div>
 
     <div class="modalFooter">

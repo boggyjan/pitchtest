@@ -30,5 +30,6 @@ export default {
     level_msg_4: 'ただの普通の人の中の普通の人',
     level_msg_5: 'ジャイアンガキ大将',
     level_msg_6: '耳鼻咽喉科は右に曲がってください',
+    tutorial_content: 'マナーモードをオフして、遊んでください。'
   }
 }
