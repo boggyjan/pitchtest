@@ -30,11 +30,6 @@
 </template>
 
 <script>
-// [todo]
-// 1. ui
-// 3. gen certification pic
-// 4. share or save certification pic
-
 export default {
   head () {
     const title = this.$t('common.head_title')
