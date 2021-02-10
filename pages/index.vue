@@ -39,7 +39,7 @@ export default {
   head () {
     let title = this.$t('common.head_title')
     let desc = this.$t('common.head_desc')
-    let image = 'https://pitchtest.boggy.tw/images/share.jpg'
+    let image = 'https://pitchtest.boggy.tw/images/sns_share_pic.jpg'
     let url = 'https://pitchtest.boggy.tw/'
 
     return {
