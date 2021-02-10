@@ -19,11 +19,15 @@
 <script>
 export default {
   head () {
-    const userName = decodeURI(this.$route.params.username.replace(/\=/g, '%'))
-    const score = decodeURI(this.$route.params.score.replace(/\=/g, '%'))
-    const levelMsg = decodeURI(this.$route.params.levelmsg.replace(/\=/g, '%'))
+    const userName = this.$route.params.username
+    const score = this.$route.params.score
+    const levelMsg = this.$route.params.levelmsg
 
-    const title = `${userName} - ${score} ${this.$t('common.point')} - ${this.$t('common.head_title')}`
+    const displayUserName = decodeURI(this.$route.params.username.replace(/\=/g, '%'))
+    const displayScore = decodeURI(this.$route.params.score.replace(/\=/g, '%'))
+    const displayLevelMsg = decodeURI(this.$route.params.levelmsg.replace(/\=/g, '%'))
+
+    const title = `${displayUserName} - ${displayScore} ${this.$t('common.point')} - ${this.$t('common.head_title')}`
     const desc = this.$t('common.head_desc')
 
     const showCertPic = userName && score && levelMsg
