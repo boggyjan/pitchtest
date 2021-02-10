@@ -1,12 +1,25 @@
 <template>
-  <div>
-    <canvas width="1000" height="700" ref="canvas" />
+  <div class="certification">
+    <!-- <canvas width="1000" height="700" ref="canvas" hidden /> -->
+    <img
+      :src="`/cert_pic?username=${userName}&score=${score}&levelmsg=${levelMsg}`"
+      width="1000" height="700" class="certification-image">
+
     <button
       v-if="!editingUserName"
       @click="editUserName()"
       class="menuBtn primary">
       {{ $t('common.enter_your_name') }}
     </button>
+
+    <a
+      v-if="!editingUserName"
+      :href="`https://www.facebook.com/sharer/sharer.php?u=https://pitchtest.boggy.tw?username=${userName}&score=${score}&levelmsg=${levelMsg}`"
+      target="_blank"
+      class="menuBtn primary">
+      {{ $t('common.share_to_fb') }}
+    </a>
+
     <div
       v-if="editingUserName"
       class="userNameModel">
@@ -28,7 +41,7 @@
 export default {
   data () {
     return {
-      certBg: null,
+      // certBg: null,
       userName: '',
       tempUserName: '',
       editingUserName: false
@@ -57,53 +70,55 @@ export default {
       }
     }
   },
-  watch: {
-    userName: {
-      immediate: true,
-      handler () {
-        this.drawCert()
-      }
-    },
-    score: {
-      immediate: true,
-      handler () {
-        this.drawCert()
-      }
-    }
-  },
+  // watch: {
+  //   userName: {
+  //     immediate: true,
+  //     handler () {
+  //       this.drawCert()
+  //     }
+  //   },
+  //   score: {
+  //     immediate: true,
+  //     handler () {
+  //       this.drawCert()
+  //     }
+  //   }
+  // },
   methods: {
-    async loadCertBg () {
-      return new Promise((resolve, reject) => {
-        this.certBg = new Image()
-        this.certBg.onload = () => {
-          resolve()
-        }
-        this.certBg.onerror = () => {
-          reject()
-        }
-        this.certBg.src = '/images/cert_bg.jpg'
-      })
-    },
-    async drawCert () {
-      if (!this.$refs.canvas || !this.$refs.canvas.getContext) {
-        return
-      }
+    // async loadCertBg () {
+    //   return new Promise((resolve, reject) => {
+    //     this.certBg = new Image()
+    //     this.certBg.onload = () => {
+    //       resolve()
+    //     }
+    //     this.certBg.onerror = () => {
+    //       reject()
+    //     }
+    //     this.certBg.src = '/images/cert_bg.jpg'
+    //   })
+    // },
+    // async drawCert () {
+    //   if (!this.$refs.canvas || !this.$refs.canvas.getContext) {
+    //     return
+    //   }
 
-      if (!this.certBg) {
-        await this.loadCertBg()
-      }
+    //   if (!this.certBg) {
+    //     await this.loadCertBg()
+    //   }
 
-      let canvas = this.$refs.canvas
-      let context = canvas.getContext('2d')
-      context.drawImage(this.certBg, 0, 0)
-      context.font = '60px Serif'
-      context.textAlign = 'center'
-      context.fillText(this.userName, canvas.width / 2, 360)
-      context.font = '50px Serif'
-      context.fillText(this.score, 290, 490)
-      context.font = '25px San Serif'
-      context.fillText(this.levelMsg, 590, 480)
-    },
+    //   let canvas = this.$refs.canvas
+    //   let context = canvas.getContext('2d')
+    //   context.drawImage(this.certBg, 0, 0)
+    //   context.font = '60px Serif'
+    //   context.textAlign = 'center'
+    //   context.fillText(this.userName, canvas.width / 2, 360)
+    //   context.font = '50px Serif'
+    //   context.fillText(this.score, 290, 490)
+    //   context.font = '25px San Serif'
+    //   context.fillText(this.levelMsg, 590, 480)
+
+    //   this.$refs.image.src = canvas.toDataURL()
+    // },
     editUserName () {
       this.editingUserName = true
     },
@@ -115,8 +130,20 @@ export default {
     }
   },
   mounted () {
-    this.userName = this.tempUserName = this.$cookies.get('userName') || ''
-    this.drawCert()
+    this.userName = this.tempUserName = this.$cookies.get('userName') || 'your name'
+    // this.drawCert()
   }
 }
 </script>
+
+<style lang="scss">
+.certification {
+  &-image {
+    display: block;
+    width: 1000px;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+  }
+}
+</style>

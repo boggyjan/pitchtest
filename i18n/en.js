@@ -19,6 +19,7 @@ export default {
     which_one_is_higher: 'Which one is higher',
     your_certification: 'Your certification',
     enter_your_name: 'Enter Your Name',
+    share_to_fb: 'Share to FB',
     submit: 'Submit',
     local_records: 'Your Records',
     global_records: 'Global Ranking',

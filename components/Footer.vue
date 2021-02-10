@@ -8,7 +8,7 @@
 .footer {
   margin-top: 80px;
   padding: 20px 0;
-  font-size: 13rem;
+  font-size: 12rem;
   text-align: center;
   color: #6cc5be;
 }

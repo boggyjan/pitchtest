@@ -19,6 +19,7 @@ export default {
     which_one_is_higher: '哪個音高比較高呢？',
     your_certification: '你的證書',
     enter_your_name: '輸入名字',
+    share_to_fb: '分享至FB',
     submit: '送出',
     local_records: '個人成績',
     global_records: '線上排名',

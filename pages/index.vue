@@ -37,9 +37,20 @@
 
 export default {
   head () {
-    let title = this.$t('common.head_title')
-    let desc = this.$t('common.head_desc')
-    let image = 'https://pitchtest.boggy.tw/images/sns_share_pic.jpg'
+    const title = this.$t('common.head_title')
+    const desc = this.$t('common.head_desc')
+
+    const userName = this.$route.query.username
+    const score = this.$route.query.score
+    const levelMsg = this.$route.query.levelmsg
+
+    const showCertPic = userName && score && levelMsg
+    console.log(showCertPic)
+
+    let image = showCertPic
+      ? `https://pitchtest.boggy.tw/cert_pic?username=${userName}&score=${score}&levelmsg=${levelMsg}`
+      : 'https://pitchtest.boggy.tw/images/sns_share_pic.jpg'
+
     let url = 'https://pitchtest.boggy.tw/'
 
     return {

@@ -67,7 +67,8 @@ export default {
   */
   serverMiddleware: [
     { path: '/api/token', handler: '~/middleware/token.js' },
-    { path: '/api/score', handler: '~/middleware/score.js' }
+    { path: '/api/score', handler: '~/middleware/score.js' },
+    { path: '/cert_pic', handler: '~/middleware/cert_pic.js' }
   ],
   /*
   ** Axios module configuration

@@ -561,12 +561,6 @@ export default {
   }
 
   .endScreen {
-    canvas {
-      display: block;
-      width: 400px;
-      max-width: 100%;
-      margin: 0 auto;
-    }
   }
 }
 
