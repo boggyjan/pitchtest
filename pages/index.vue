@@ -39,8 +39,8 @@ export default {
   head () {
     let title = this.$t('common.head_title')
     let desc = this.$t('common.head_desc')
-    let image = 'https://app.boggy.tw/pitchtest/images/share.jpg'
-    let url = 'https://app.boggy.tw/pitchtest'
+    let image = 'https://pitchtest.boggy.tw/images/share.jpg'
+    let url = 'https://pitchtest.boggy.tw/'
 
     return {
       title: title,

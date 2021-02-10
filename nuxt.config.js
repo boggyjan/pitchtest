@@ -105,7 +105,7 @@ export default {
     //   alwaysRedirect: true
     // },
     seo: true,
-    baseUrl: 'https://app.boggy.tw/pitchtest'
+    baseUrl: 'https://pitchtest.boggy.tw'
   },
   /*
   ** Build configuration
