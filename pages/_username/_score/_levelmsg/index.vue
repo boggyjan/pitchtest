@@ -1,15 +1,23 @@
 <template>
-  <div class="pitchTestApp">
+  <div class="pitchTestApp shareCertification">
     <Header />
+
+    <h1>
+      <img
+        src="~/assets/images/logo.svg"
+        :alt="$t('common.head_title')"
+        class="logo">
+    </h1>
 
     <img
       :src="`/cert_pic?username=${userName}&score=${score}&levelmsg=${levelMsg}`"
-      width="1000" height="700" class="shared-certification-image">
+      width="1000" height="700" class="image">
 
     <nuxt-link
       :to="localePath('index')"
       class="menuBtn primary">
       {{ $t('common.start_game') }}
+      {{ $t('common.head_title') }}
     </nuxt-link>
 
     <Footer />
@@ -75,9 +83,23 @@ export default {
 <style lang="scss">
 @import '@/assets/scss/pages/index.scss';
 
-.shared-certification-image {
-  width: 1000px;
-  max-width: 100%;
-  height: auto;
+.shareCertification {
+  h1 {
+    text-align: center;
+  }
+
+  .logo {
+    width: 200px;
+    animation: 5s logoAnimation infinite;
+  }
+
+  .image {
+    width: 1000px;
+    max-width: 100%;
+    height: auto;
+    margin-left: -10px;
+    border: 10px solid #fff;
+    box-shadow: 0 2px 10px #5cd4ca;
+  }
 }
 </style>

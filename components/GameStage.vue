@@ -563,19 +563,4 @@ export default {
   .endScreen {
   }
 }
-
-@keyframes answerAnimation {
-  0% {
-    transform: rotate(0deg) scale(1);
-  }
-  50% {
-    transform: rotate(1440deg) scale(1);
-  }
-  80% {
-    transform: rotate(1440deg) scale(0.8);
-  }
-  100% {
-    transform: rotate(1440deg) scale(10);
-  }
-}
 </style>
