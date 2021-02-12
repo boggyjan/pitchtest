@@ -182,6 +182,31 @@ export default {
     }
   },
   methods: {
+  	async initGame () {
+      // get token from server
+      try {
+        let tokenReq = await this.$axios.get('api/token')
+        this.$axios.setToken(tokenReq.data.token)
+      } catch (err) {
+        console.log(err)
+      }
+  
+      if (!this.context) {
+        this.context = new (window.AudioContext || window.webkitAudioContext)
+        this.analyser = this.context.createAnalyser()
+        this.gainNode = this.context.createGain()
+  
+        this.analyser.connect(this.context.destination)
+        this.gainNode.gain.value = 0.25
+        this.gainNode.connect(this.analyser)
+      }
+  
+      // save start time
+      this.startTime = new Date().getTime()
+  
+      this.showStep(this.questionStep)
+  	},
+
     // set question
     showStep (step) {
       clearInterval(this.timeLimitInterval)
@@ -329,8 +354,7 @@ export default {
       this.questionStep = 0
       this.totalScore = 0
       this.gameover = false
-
-      this.$emit('playGame')
+      this.initGame()
     },
 
     // back to main screen
@@ -343,30 +367,8 @@ export default {
       this.$emit('endGame')
     }
   },
-  async mounted () {
-
-    // get token from server
-    try {
-      let tokenReq = await this.$axios.get('api/token')
-      this.$axios.setToken(tokenReq.data.token)
-    } catch (err) {
-      console.log(err)
-    }
-
-    if (!this.context) {
-      this.context = new (window.AudioContext || window.webkitAudioContext)
-      this.analyser = this.context.createAnalyser()
-      this.gainNode = this.context.createGain()
-
-      this.analyser.connect(this.context.destination)
-      this.gainNode.gain.value = 0.25
-      this.gainNode.connect(this.analyser)
-    }
-
-    // save start time
-    this.startTime = new Date().getTime()
-
-    this.showStep(this.questionStep)
+  mounted () {
+	this.initGame()
   }
 }
 </script>

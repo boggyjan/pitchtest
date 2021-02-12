@@ -16,7 +16,6 @@
     <GameStage
       v-if="playing"
       :scoreCookieKey="scoreCookieKey"
-      @playGame="playGame()"
       @endGame="endGame()"
       @showRecords="showRecords()" />
 
