@@ -22,7 +22,17 @@ export default async function (req, res, next) {
           // response
           res.writeHead(200, { 'Content-Type': 'application/json' })
           // return top 100
-          res.end(JSON.stringify({list: JSON.parse(data).slice(0, 100)}))
+
+          try {
+            const list = JSON.parse(data).slice(0, 100)
+            res.end(JSON.stringify({ list }))
+          } catch (err) {
+            res.writeHead(500, { 'Content-Type': 'application/json' })
+            res.end(JSON.stringify({
+              message: 'data error'
+            }))
+            return
+          }
         }
       })
     } else {
