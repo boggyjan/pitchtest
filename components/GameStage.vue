@@ -60,7 +60,7 @@
     <div class="ansBtns">
       <button
         v-for="(i, idx) in 2"
-        @click="showAns(idx === currentAns)"
+        @click="clearAutoplayTuneInterval(); showAns(idx === currentAns)"
         :key="`ansBtn${idx}`"
         :disabled="showingAnswer || gameover"
         class="ansBtn">
@@ -119,8 +119,8 @@
 <script>
 export default {
   data () {
-    var ques = [14, 12, 13, 15, 10, 8, 9, 6, 7, 5, 3, 4, 2, 3, 1, 4, 3, 1, 2, 1]
-    var baseTunes = [293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25]
+    var ques = [15, 14, 13, 12, 10, 9, 8, 7, 6, 5, 4, 3, 4, 3, 1, 2, 3, 1, 2, 1]
+    var baseTunes = [220.00, 246.94, 261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25, 587.33, 659.26, 698.46, 783.99, 880.00]
     // 最大差值
     var questionWaveRange = 20
     // 最大可能得分數（會超過100，顯示分數時會再做轉換）
@@ -189,16 +189,6 @@ export default {
         this.$axios.setToken(tokenReq.data.token)
       } catch (err) {
         console.log(err)
-      }
-  
-      if (!this.context) {
-        this.context = new (window.AudioContext || window.webkitAudioContext)
-        this.analyser = this.context.createAnalyser()
-        this.gainNode = this.context.createGain()
-  
-        this.analyser.connect(this.context.destination)
-        this.gainNode.gain.value = 0.25
-        this.gainNode.connect(this.analyser)
       }
   
       // save start time
@@ -285,8 +275,24 @@ export default {
       }, 1000)
     },
 
+    resetAudioContext () {
+      if (this.context) {
+        this.context.close()
+      }
+
+      this.context = new (window.AudioContext || window.webkitAudioContext)
+      this.analyser = this.context.createAnalyser()
+      this.gainNode = this.context.createGain()
+
+      this.analyser.connect(this.context.destination)
+      this.gainNode.gain.value = 0.25
+      this.gainNode.connect(this.analyser)
+    },
+
     // play tune sound
-    playTune (idx, type = 'sine', startTime = this.context.currentTime, duration = 0.5) {
+    playTune (idx, type = 'sine', startTime = 0, duration = 0.5) {
+      this.resetAudioContext()
+
       var oscillator = this.context.createOscillator()
       oscillator.type = type
       oscillator.frequency.value = this.ansTunes[idx]
