@@ -17,7 +17,7 @@ export default async function (req, res, next) {
         } else {
 
           // 暫時解決有時候不知為何造成檔案結尾多一個中括弧 ]] 的問題
-          data = data.replace(']]', ']')
+          data = data.replace(/].*]/g, ']')
 
           // response
           res.writeHead(200, { 'Content-Type': 'application/json' })
@@ -75,7 +75,7 @@ export default async function (req, res, next) {
               } else {
 
                 // 暫時解決有時候不知為何造成檔案結尾多一個中括弧 ]] 的問題
-                data = data.replace(']]', ']')
+                data = data.replace(/].*]/g, ']')
 
                 // record info
                 let record = {
