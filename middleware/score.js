@@ -15,6 +15,11 @@ export default async function (req, res, next) {
             message: 'database error'
           }))
         } else {
+
+          // 暫時解決有時候不知為何造成檔案結尾多一個中括弧 ]] 的問題
+          data = data.replace(']]', ']')
+
+          // response
           res.writeHead(200, { 'Content-Type': 'application/json' })
           // return top 50
           res.end(JSON.stringify({list: JSON.parse(data).slice(0, 50)}))
@@ -68,6 +73,11 @@ export default async function (req, res, next) {
                   message: 'database error'
                 }))
               } else {
+
+                // 暫時解決有時候不知為何造成檔案結尾多一個中括弧 ]] 的問題
+                data = data.replace(']]', ']')
+
+                // record info
                 let record = {
                   token: token,
                   name: postData.name,
