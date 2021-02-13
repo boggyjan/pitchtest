@@ -21,8 +21,8 @@ export default async function (req, res, next) {
 
           // response
           res.writeHead(200, { 'Content-Type': 'application/json' })
-          // return top 50
-          res.end(JSON.stringify({list: JSON.parse(data).slice(0, 50)}))
+          // return top 100
+          res.end(JSON.stringify({list: JSON.parse(data).slice(0, 100)}))
         }
       })
     } else {
@@ -117,8 +117,8 @@ export default async function (req, res, next) {
                   }
                 })
 
-                // slice top 50
-                // records = records.slice(0, 50)
+                // slice top 100
+                // records = records.slice(0, 100)
 
                 // write record
                 fs.writeFile(filePath, JSON.stringify(records), (err, data) => {

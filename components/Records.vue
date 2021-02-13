@@ -15,6 +15,7 @@
           @click="changeType(1)"
           :class="{ active: showingRecordType === 1 }">
           {{ $t('common.global_records') }}
+          Top 100
         </button>
       </div>
       <ul v-if="displayScoreRecords.length">
@@ -114,7 +115,7 @@ export default {
   }
 
   ul {
-    height: calc(100vh - 330px);
+    height: calc(100vh - 380px);
     margin: 0;
     padding: 10px;
     overflow-y: auto;
