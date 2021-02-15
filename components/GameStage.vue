@@ -46,7 +46,7 @@
       <button
         v-for="(i, idx) in 2"
         :key="`tuneBtn${idx}`"
-        @click="clearAutoplayTuneInterval(); playTune(idx)"
+        @click="clearAutoplayTuneInterval(); resetAudioContext(); playTune(idx)"
         :disabled="showingAnswer || gameover"
         :class="{ active: playingTune === idx }"
         class="tuneBtn">
@@ -60,7 +60,7 @@
     <div class="ansBtns">
       <button
         v-for="(i, idx) in 2"
-        @click="clearAutoplayTuneInterval(); showAns(idx === currentAns)"
+        @click="clearAutoplayTuneInterval(); resetAudioContext(); showAns(idx === currentAns)"
         :key="`ansBtn${idx}`"
         :disabled="showingAnswer || gameover"
         class="ansBtn">
@@ -194,6 +194,8 @@ export default {
       // save start time
       this.startTime = new Date().getTime()
   
+      this.resetAudioContext()
+
       this.showStep(this.questionStep)
   	},
 
@@ -290,9 +292,7 @@ export default {
     },
 
     // play tune sound
-    playTune (idx, type = 'sine', startTime = 0, duration = 0.5) {
-      this.resetAudioContext()
-
+    playTune (idx, type = 'sine', startTime = this.context ? this.context.currentTime : 0, duration = 0.5) {
       var oscillator = this.context.createOscillator()
       oscillator.type = type
       oscillator.frequency.value = this.ansTunes[idx]
@@ -374,7 +374,7 @@ export default {
     }
   },
   mounted () {
-	this.initGame()
+    this.initGame()
   }
 }
 </script>
