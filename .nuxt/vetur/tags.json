@@ -1,0 +1,23 @@
+{
+  "Certification": {
+    "description": "Auto imported from components/Certification.vue"
+  },
+  "Footer": {
+    "description": "Auto imported from components/Footer.vue"
+  },
+  "GameStage": {
+    "description": "Auto imported from components/GameStage.vue"
+  },
+  "Header": {
+    "description": "Auto imported from components/Header.vue"
+  },
+  "MainMenu": {
+    "description": "Auto imported from components/MainMenu.vue"
+  },
+  "Records": {
+    "description": "Auto imported from components/Records.vue"
+  },
+  "Tutorial": {
+    "description": "Auto imported from components/Tutorial.vue"
+  }
+}

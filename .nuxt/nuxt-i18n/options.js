@@ -1,0 +1,29 @@
+export const vueI18n = {"fallbackLocale":"tw"}
+export const vueI18nLoader = false
+export const locales = [{"code":"tw","name":"繁體中文","shortName":"繁","iso":"zh-Hant","file":"tw.js"},{"code":"en","name":"English","shortName":"EN","iso":"en","file":"en.js"},{"code":"jp","name":"日本語","shortName":"日","iso":"ja","file":"jp.js"}]
+export const defaultLocale = 'tw'
+export const routesNameSeparator = '___'
+export const defaultLocaleRouteNameSuffix = 'default'
+export const strategy = 'prefix_except_default'
+export const lazy = true
+export const langDir = './i18n/'
+export const rootRedirect = null
+export const detectBrowserLanguage = {"useCookie":true,"cookieDomain":null,"cookieKey":"i18n_redirected","alwaysRedirect":false,"fallbackLocale":""}
+export const differentDomains = false
+export const seo = true
+export const baseUrl = 'https://pitchtest.boggy.tw'
+export const vuex = {"moduleName":"i18n","syncLocale":false,"syncMessages":false,"syncRouteParams":true}
+export const parsePages = true
+export const pages = {}
+export const beforeLanguageSwitch = () => null
+export const onLanguageSwitched = () => null
+export const IS_UNIVERSAL_MODE = true
+export const MODULE_NAME = 'nuxt-i18n'
+export const LOCALE_CODE_KEY = 'code'
+export const LOCALE_ISO_KEY = 'iso'
+export const LOCALE_DOMAIN_KEY = 'domain'
+export const LOCALE_FILE_KEY = 'file'
+export const STRATEGIES = {"PREFIX":"prefix","PREFIX_EXCEPT_DEFAULT":"prefix_except_default","PREFIX_AND_DEFAULT":"prefix_and_default","NO_PREFIX":"no_prefix"}
+export const COMPONENT_OPTIONS_KEY = 'nuxtI18n'
+export const localeCodes = ["tw","en","jp"]
+export const trailingSlash = undefined

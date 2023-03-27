@@ -1,16 +1,11 @@
 export default {
   /*
-  ** Nuxt rendering mode
-  ** See https://nuxtjs.org/api/configuration-mode
-  */
-  mode: 'universal',
-  /*
   ** Nuxt target
   ** See https://nuxtjs.org/api/configuration-target
   */
   target: 'server',
   server: {
-    port: 5678,
+    port: 1122, // aikoの誕生日
     host: '0.0.0.0' // default: localhost
   },
   /*
@@ -66,9 +61,9 @@ export default {
   ** serverMiddleware
   */
   serverMiddleware: [
-    { path: '/api/token', handler: '~/middleware/token.js' },
-    { path: '/api/score', handler: '~/middleware/score.js' },
-    { path: '/cert_pic', handler: '~/middleware/cert_pic.js' }
+    { path: '/api/token', handler: '~/server-middleware/token.js' },
+    { path: '/api/score', handler: '~/server-middleware/score.js' },
+    { path: '/cert_pic', handler: '~/server-middleware/cert_pic.js' }
   ],
   /*
   ** Axios module configuration
