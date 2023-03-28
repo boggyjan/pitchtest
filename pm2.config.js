@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: "PitchTest",
+      name: "pitchtest.boggy.tw",
       script: "npm start",
       watch: true,
       env: {
