@@ -1,0 +1,33 @@
+{
+  "entry": "server.js",
+  "files": {
+    "components/certification.js": "components/certification.js",
+    "components/footer.js": "components/footer.js",
+    "components/game-stage.js": "components/game-stage.js",
+    "components/header.js": "components/header.js",
+    "components/main-menu.js": "components/main-menu.js",
+    "components/records.js": "components/records.js",
+    "components/tutorial.js": "components/tutorial.js",
+    "lang-en.js": "lang-en.js",
+    "lang-jp.js": "lang-jp.js",
+    "lang-tw.js": "lang-tw.js",
+    "pages/_username/_score/_levelmsg/index.js": "pages/_username/_score/_levelmsg/index.js",
+    "pages/index.js": "pages/index.js",
+    "server.js": "server.js"
+  },
+  "maps": {
+    "components/certification.js": "components/certification.js.map",
+    "components/footer.js": "components/footer.js.map",
+    "components/game-stage.js": "components/game-stage.js.map",
+    "components/header.js": "components/header.js.map",
+    "components/main-menu.js": "components/main-menu.js.map",
+    "components/records.js": "components/records.js.map",
+    "components/tutorial.js": "components/tutorial.js.map",
+    "lang-en.js": "lang-en.js.map",
+    "lang-jp.js": "lang-jp.js.map",
+    "lang-tw.js": "lang-tw.js.map",
+    "pages/_username/_score/_levelmsg/index.js": "pages/_username/_score/_levelmsg/index.js.map",
+    "pages/index.js": "pages/index.js.map",
+    "server.js": "server.js.map"
+  }
+}
