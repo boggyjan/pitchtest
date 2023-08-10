@@ -4,7 +4,7 @@ exports.modules = {
 /***/ 48:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "img/logo.880f159.svg";
+module.exports = __webpack_require__.p + "img/logo.577e8dd.svg";
 
 /***/ }),
 
@@ -21,7 +21,7 @@ if(content.locals) module.exports = content.locals;
 // add CSS to SSR context
 var add = __webpack_require__(12).default
 module.exports.__inject__ = function (context) {
-  add("3b2b9b9a", content, false, context)
+  add("3b2b9b9a", content, true, context)
 };
 
 /***/ }),
@@ -94,7 +94,7 @@ var component = Object(componentNormalizer["a" /* default */])(
   false,
   injectStyles,
   null,
-  "e05325ca"
+  "27cdfe4a"
   
 )
 

@@ -4,8 +4,8 @@ import { normalizeURL, decode } from 'ufo'
 import { interopDefault } from './utils'
 import scrollBehavior from './router.scrollBehavior.js'
 
-const _59510f6c = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
-const _283d1296 = () => interopDefault(import('../pages/_username/_score/_levelmsg/index.vue' /* webpackChunkName: "pages/_username/_score/_levelmsg/index" */))
+const _5b5cdd0a = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
+const _6739cc16 = () => interopDefault(import('../pages/_username/_score/_levelmsg/index.vue' /* webpackChunkName: "pages/_username/_score/_levelmsg/index" */))
 
 const emptyFn = () => {}
 
@@ -20,27 +20,27 @@ export const routerOptions = {
 
   routes: [{
     path: "/en",
-    component: _59510f6c,
+    component: _5b5cdd0a,
     name: "index___en"
   }, {
     path: "/jp",
-    component: _59510f6c,
+    component: _5b5cdd0a,
     name: "index___jp"
   }, {
     path: "/en/:username/:score?/:levelmsg",
-    component: _283d1296,
+    component: _6739cc16,
     name: "username-score-levelmsg___en"
   }, {
     path: "/jp/:username/:score?/:levelmsg",
-    component: _283d1296,
+    component: _6739cc16,
     name: "username-score-levelmsg___jp"
   }, {
     path: "/",
-    component: _59510f6c,
+    component: _5b5cdd0a,
     name: "index___tw"
   }, {
     path: "/:username/:score?/:levelmsg",
-    component: _283d1296,
+    component: _6739cc16,
     name: "username-score-levelmsg___tw"
   }],
 

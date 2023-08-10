@@ -585,7 +585,7 @@ if(content.locals) module.exports = content.locals;
 // add CSS to SSR context
 var add = __webpack_require__(12).default
 module.exports.__inject__ = function (context) {
-  add("ad839196", content, false, context)
+  add("ad839196", content, true, context)
 };
 
 /***/ }),
@@ -602,7 +602,7 @@ if(content.locals) module.exports = content.locals;
 // add CSS to SSR context
 var add = __webpack_require__(12).default
 module.exports.__inject__ = function (context) {
-  add("0a5c61ee", content, false, context)
+  add("0a5c61ee", content, true, context)
 };
 
 /***/ }),
@@ -1666,8 +1666,8 @@ function shouldScrollToTop(route) {
 
 
 
-const _59510f6c = () => interopDefault(__webpack_require__.e(/* import() | pages/index */ 12).then(__webpack_require__.bind(null, 80)));
-const _283d1296 = () => interopDefault(__webpack_require__.e(/* import() | pages/_username/_score/_levelmsg/index */ 11).then(__webpack_require__.bind(null, 81)));
+const _5b5cdd0a = () => interopDefault(__webpack_require__.e(/* import() | pages/index */ 12).then(__webpack_require__.bind(null, 80)));
+const _6739cc16 = () => interopDefault(__webpack_require__.e(/* import() | pages/_username/_score/_levelmsg/index */ 11).then(__webpack_require__.bind(null, 81)));
 
 const emptyFn = () => {};
 external_vue_default.a.use(external_vue_router_default.a);
@@ -1679,27 +1679,27 @@ const routerOptions = {
   scrollBehavior: router_scrollBehavior,
   routes: [{
     path: "/en",
-    component: _59510f6c,
+    component: _5b5cdd0a,
     name: "index___en"
   }, {
     path: "/jp",
-    component: _59510f6c,
+    component: _5b5cdd0a,
     name: "index___jp"
   }, {
     path: "/en/:username/:score?/:levelmsg",
-    component: _283d1296,
+    component: _6739cc16,
     name: "username-score-levelmsg___en"
   }, {
     path: "/jp/:username/:score?/:levelmsg",
-    component: _283d1296,
+    component: _6739cc16,
     name: "username-score-levelmsg___jp"
   }, {
     path: "/",
-    component: _59510f6c,
+    component: _5b5cdd0a,
     name: "index___tw"
   }, {
     path: "/:username/:score?/:levelmsg",
-    component: _283d1296,
+    component: _6739cc16,
     name: "username-score-levelmsg___tw"
   }],
   fallback: false
@@ -1871,7 +1871,7 @@ var nuxt_error_component = Object(componentNormalizer["a" /* default */])(
   false,
   injectStyles,
   null,
-  "09bb8d63"
+  "f9e33dba"
   
 )
 
@@ -2136,7 +2136,7 @@ var nuxt_loading_component = Object(componentNormalizer["a" /* default */])(
   false,
   nuxt_loading_injectStyles,
   null,
-  "01368452"
+  "6f51a197"
   
 )
 
@@ -2165,7 +2165,7 @@ var default_component = Object(componentNormalizer["a" /* default */])(
   false,
   null,
   null,
-  "5ffed025"
+  "3e2143e5"
   
 )
 

@@ -2,43 +2,43 @@
   {
     "name": "index___en",
     "path": "/en",
-    "component": "/Users/chouyuuhitoshi/Desktop/pitchtest/pages/index.vue",
+    "component": "/var/www/pitchtest.boggy.tw/pages/index.vue",
     "chunkName": "pages/index",
-    "_name": "_59510f6c"
+    "_name": "_5b5cdd0a"
   },
   {
     "name": "index___jp",
     "path": "/jp",
-    "component": "/Users/chouyuuhitoshi/Desktop/pitchtest/pages/index.vue",
+    "component": "/var/www/pitchtest.boggy.tw/pages/index.vue",
     "chunkName": "pages/index",
-    "_name": "_59510f6c"
+    "_name": "_5b5cdd0a"
   },
   {
     "name": "username-score-levelmsg___en",
     "path": "/en/:username/:score?/:levelmsg",
-    "component": "/Users/chouyuuhitoshi/Desktop/pitchtest/pages/_username/_score/_levelmsg/index.vue",
+    "component": "/var/www/pitchtest.boggy.tw/pages/_username/_score/_levelmsg/index.vue",
     "chunkName": "pages/_username/_score/_levelmsg/index",
-    "_name": "_283d1296"
+    "_name": "_6739cc16"
   },
   {
     "name": "username-score-levelmsg___jp",
     "path": "/jp/:username/:score?/:levelmsg",
-    "component": "/Users/chouyuuhitoshi/Desktop/pitchtest/pages/_username/_score/_levelmsg/index.vue",
+    "component": "/var/www/pitchtest.boggy.tw/pages/_username/_score/_levelmsg/index.vue",
     "chunkName": "pages/_username/_score/_levelmsg/index",
-    "_name": "_283d1296"
+    "_name": "_6739cc16"
   },
   {
     "name": "index___tw",
     "path": "/",
-    "component": "/Users/chouyuuhitoshi/Desktop/pitchtest/pages/index.vue",
+    "component": "/var/www/pitchtest.boggy.tw/pages/index.vue",
     "chunkName": "pages/index",
-    "_name": "_59510f6c"
+    "_name": "_5b5cdd0a"
   },
   {
     "name": "username-score-levelmsg___tw",
     "path": "/:username/:score?/:levelmsg",
-    "component": "/Users/chouyuuhitoshi/Desktop/pitchtest/pages/_username/_score/_levelmsg/index.vue",
+    "component": "/var/www/pitchtest.boggy.tw/pages/_username/_score/_levelmsg/index.vue",
     "chunkName": "pages/_username/_score/_levelmsg/index",
-    "_name": "_283d1296"
+    "_name": "_6739cc16"
   }
 ]

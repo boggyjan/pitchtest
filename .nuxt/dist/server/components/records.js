@@ -14,7 +14,7 @@ if(content.locals) module.exports = content.locals;
 // add CSS to SSR context
 var add = __webpack_require__(12).default
 module.exports.__inject__ = function (context) {
-  add("de2b9600", content, false, context)
+  add("de2b9600", content, true, context)
 };
 
 /***/ }),
@@ -134,7 +134,7 @@ var component = Object(componentNormalizer["a" /* default */])(
   false,
   injectStyles,
   null,
-  "798aeeaf"
+  "f6723a22"
   
 )
 
